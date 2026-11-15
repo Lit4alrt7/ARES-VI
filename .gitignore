@@ -1,0 +1,68 @@
+# ---------------------------------------------------------------
+# Unreal Engine 5 – generated / local folders
+# ---------------------------------------------------------------
+Binaries/
+Intermediate/
+Saved/
+DerivedDataCache/
+Build/
+Plugins/*/Binaries/
+Plugins/*/Intermediate/
+
+# ---------------------------------------------------------------
+# Visual Studio / Rider / VS Code
+# ---------------------------------------------------------------
+.vs/
+.vscode/
+.idea/
+*.sln
+*.suo
+*.user
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.opendb
+*.vsidx
+*.ipch
+UpgradeLog*.htm
+
+# ---------------------------------------------------------------
+# Compiled / build artefacts
+# ---------------------------------------------------------------
+*.pdb
+*.obj
+*.o
+*.dll
+*.exe
+*.lib
+*.exp
+*.ilk
+
+# ---------------------------------------------------------------
+# Packaged builds and archives
+# ---------------------------------------------------------------
+Packaged/
+Windows/
+*.pak
+*.zip
+*.7z
+
+# ---------------------------------------------------------------
+# Misc
+# ---------------------------------------------------------------
+*.tmp
+*.log
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Python bytecode from editor scripts
+__pycache__/
+*.pyc
+
+# Local Claude Code settings
+.claude/settings.local.json
+
+# Secrets – the A.R.I.A. API key must only live in the ANTHROPIC_API_KEY env var
+.env
+*.env

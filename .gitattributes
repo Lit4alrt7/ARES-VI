@@ -1,0 +1,19 @@
+# Unreal binary assets go through Git LFS.
+# AresStation.umap is ~235 MB, which exceeds GitHub's 100 MB per-file limit.
+*.uasset filter=lfs diff=lfs merge=lfs -text
+*.umap   filter=lfs diff=lfs merge=lfs -text
+
+# Source media
+*.wav    filter=lfs diff=lfs merge=lfs -text
+*.fbx    filter=lfs diff=lfs merge=lfs -text
+*.glb    filter=lfs diff=lfs merge=lfs -text
+
+# Text files: normalise line endings
+*.cpp    text eol=crlf
+*.h      text eol=crlf
+*.cs     text eol=crlf
+*.ini    text eol=crlf
+*.py     text eol=lf
+*.md     text eol=lf
+*.uproject text eol=crlf
+*.bat    text eol=crlf
