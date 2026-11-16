@@ -144,14 +144,6 @@ cd MarsSurvival
 If the materials or the map are missing (for example, if you cloned without LFS), regenerate them in the editor with
 **Tools → Execute Python Script →** `Content/Python/setup_mars_project.py`. The script can safely be run again.
 
-### Optional: live A.R.I.A. uplink
-
-Set the `ANTHROPIC_API_KEY` environment variable before starting the editor or game. Without it, A.R.I.A. uses built-in offline reports.
-The key is read at runtime only and is never saved into assets or config. **Never commit an API key.**
-
-```powershell
-setx ANTHROPIC_API_KEY "your-key-here"
-```
 
 ### Launcher scripts
 
