@@ -28,6 +28,7 @@ Pass these on the command line, for example in `Play_MarsSurvival.bat` or **Addi
 | `-AutoBoard` | Board the recon shuttle on spawn |
 | `-AutoFly` | Make the piloted shuttle fly itself |
 | `-AutoWrist` | Raise the wrist computer on spawn |
+| `-SolarStormAt=<t>` | Start the catastrophic solar storm warning `t` seconds after play begins |
 
 These flags exist for screenshots and demos. Read the code that handles each one (search for `FParse::` in `Source/`) before relying on exact behaviour.
 

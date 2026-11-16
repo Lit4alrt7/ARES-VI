@@ -43,7 +43,11 @@ The project is C++ only. There is no Blueprint gameplay logic, and the world is 
 
 ## Secrets
 
-**Never commit an API key.** A.R.I.A. reads `ANTHROPIC_API_KEY` from the environment at runtime. Don't put keys in `.ini` files, source or assets.
+**Never commit an API key.** A.R.I.A.'s optional online mode reads its key from an environment variable at runtime (see [ARIA-Integration.md](Documentation/ARIA-Integration.md)). Don't put keys in `.ini` files, source or assets.
+
+## Releases
+
+Package builds with `Scripts/Package-Windows.ps1` and follow the checklist in [Documentation/Releasing.md](Documentation/Releasing.md). Never upload a build you haven't played through at least once.
 
 ## Reporting bugs
 

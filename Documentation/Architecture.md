@@ -16,7 +16,9 @@ World subsystems (tick every frame)
  ├─ UMarsEnvironmentSubsystem  Sol clock, temperatures, dust storms, solar particle events
  ├─ UMarsStationSubsystem      module registry, RTG power grid, alerts, Earth-contact win state
  ├─ UMarsNarrativeDirector     current objective + wayfinding target
- └─ UAriaSubsystem             telemetry → Claude API (or offline report) → A.R.I.A. message
+ ├─ UAriaSubsystem             telemetry → offline report (or optional online uplink) → A.R.I.A. message
+ ├─ UMarsBaseManager           power, oxygen, integrity and stockpiles; applies their consequences
+ └─ UMarsSolarStormManager     rare catastrophic solar storms (warning → active → subsiding)
 
 AMarsCharacter (player)
  ├─ UPlayerBiometricsComponent   physiology, disease stages, hallucination intensity
@@ -34,7 +36,7 @@ AMarsCharacter (player)
 
 | Folder | Key classes | Responsibility |
 |---|---|---|
-| `AI/` | `UAriaSubsystem`, `UClaudeAPIClient` | Builds telemetry, requests reports periodically and on events, handles offline fallback. See [ARIA-Integration.md](ARIA-Integration.md). |
+| `AI/` | `UAriaSubsystem`, `UClaudeAPIClient` | Builds telemetry and requests reports periodically and on events. Generates offline reports, with an optional online client. See [ARIA-Integration.md](ARIA-Integration.md). |
 | `Audio/` | `UMarsProceduralSynth`, `UMarsAudioManager`, `UAriaVoiceComponent` | Stereo synthesis on the audio render thread. No sound assets. Optional `Content/Audio/IntroTheme.wav`. |
 | `Base/` | `AMarsBaseModule`, `AAirlockModule`, `ABioDomeModule`, `AMedicalBayModule`, `ACommRelayModule` | Pressurised compartments: pressure, thermal, seals, CO2, hull damage and repair. |
 | `Core/` | `AMarsGameMode`, `UMarsNarrativeDirector`, `UMarsSaveGame`, `AMarsTutorialManager`, `AMarsHUD`, `MarsTime`, `MarsUserSettings` | Mission rules, story, saving, settings, shared simulation clock. |
@@ -47,7 +49,7 @@ AMarsCharacter (player)
 | `Stations/` | `AMarsStationBase` + ~20 subclasses, `AMarsSaveTerminal` | Interactive machines with live in-world screens. |
 | `UI/` | `UMarsPlayerHUD`, `USplashIntroWidget`, `UIntroBriefingWidget`, `UMarsPauseMenuWidget`, `FMarsSettingsPanel`, `MarsUIStyle` | All UI, drawn in C++ (Slate/UMG). |
 | `Vehicles/` | `AMarsReconShuttle` | Flyable RS-2 VTOL pawn with its own battery and O2. |
-| `World/` | `AMarsStationGenerator`, `AMarsTerrainGenerator`, `AMarsSurfaceGenerator`, `UMarsEnvironmentSubsystem`, `UMarsStationSubsystem`, `ASurfaceBeacon`, `ARadiationHazardZone`, `AMarsWaypointTrail`, `AMarsShuttle` | Station and surface generation, environment, navigation aids. |
+| `World/` | `AMarsStationGenerator`, `AMarsTerrainGenerator`, `AMarsSurfaceGenerator`, `UMarsEnvironmentSubsystem`, `UMarsStationSubsystem`, `UMarsBaseManager`, `UMarsSolarStormManager`, `ASurfaceBeacon`, `ARadiationHazardZone`, `AMarsWaypointTrail`, `AMarsShuttle` | Station and surface generation, environment, navigation aids. |
 
 ## Station layout
 

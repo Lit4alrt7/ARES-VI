@@ -60,9 +60,12 @@ Desktop.ini
 __pycache__/
 *.pyc
 
-# Local Claude Code settings
-.claude/settings.local.json
+# Local editor / tool settings
+.claude/
 
-# Secrets – the A.R.I.A. API key must only live in the ANTHROPIC_API_KEY env var
+# Packaging output (Scripts/Package-Windows.ps1)
+Release/
+
+# Secrets – API keys belong in environment variables, never in the repo
 .env
 *.env

@@ -1,9 +1,11 @@
 # ARES-VI
 
 **A hard sci-fi psychological survival horror game set on Mars in 2087.**
-Built in Unreal Engine 5.3 with C++. Internal project name: `MarsSurvival`.
+Developed by **Team Paradox** in Unreal Engine 5.3 and C++. Internal project name: `MarsSurvival`.
 
 ![Main menu: Mars seen through the MTV Odysseus viewport](Documentation/screenshots/main-menu.png)
+
+> **Just want to play?** Once the first demo is published, download the Windows build from the [Releases](https://github.com/Lit4alrt7/ARES-VI/releases) page and follow [INSTALL.md](INSTALL.md). You won't need Unreal Engine.
 
 ---
 
@@ -11,6 +13,7 @@ Built in Unreal Engine 5.3 with C++. Internal project name: `MarsSurvival`.
 
 - [Overview](#overview)
 - [Concept](#concept)
+- [Design pillars](#design-pillars)
 - [Features](#features)
 - [Gameplay mechanics](#gameplay-mechanics)
 - [Technologies used](#technologies-used)
@@ -38,13 +41,21 @@ The horror comes from not knowing what is real. The phantoms can be shot, and sh
 
 The habitat computer, **A.R.I.A.**, is your only company. It is cold and clinical, it only trusts its sensors, and it will tell you plainly that no one else is on the base.
 
+## Design pillars
+
+1. **The body is the enemy.** Every threat is physiological or environmental: poison, CO2, radiation, cold, vacuum. Nothing is scripted to jump out at you.
+2. **Doubt your senses.** Real station noises and hallucinated ones sound alike. The only reliable witness is a machine with no empathy.
+3. **Every action has a physical cost.** A bullet fired at a phantom is still a hole in a pressure hull. Repairs, power and medicine all compete for the same scarce resources.
+4. **Grounded science.** Pressure, heat loss, seal embrittlement, methaemoglobin and dose are modelled with plausible numbers, then tuned for play.
+5. **Lo-fi on purpose.** A PS1-era look and fully procedural audio keep the focus on atmosphere and make the build small.
+
 ## Features
 
 - **Physically modelled habitat.** Each pressurised module simulates pressure loss through bullet holes, hull breaches and cold-cracked seals, plus heating against the Martian night, CO2 build-up and life-support repressurisation.
 - **Four-stage disease system.** Methaemoglobin, radiation dose and an extremophile bio-load push the player through four disease stages, from mild symptoms to systemic collapse with a lethal countdown.
 - **Hallucination system.** Hallucination intensity is built from radiation, hypoxia, hypercapnia, acute dose rate and panic. It triggers phantoms (audio and visual), Cherenkov-style light flashes and post-process distortion.
 - **"Ballistic awakening".** Shooting a phantom collapses it into ash and briefly restores clarity. The round then holes the bulkhead behind it.
-- **A.R.I.A. habitat AI.** Optionally connects to the Anthropic Claude API to answer from live sensor telemetry. Without an API key it falls back to built-in offline reports.
+- **A.R.I.A. habitat computer.** A sensor-bound station character that reports on telemetry periodically, reacts to breaches, gunfire and critical vitals, and answers when you talk to it (T).
 - **Three-chapter story** paced by Sols (Martian days), with a day/night cycle, dust storms and solar particle events.
 - **RS-2 recon shuttle** that you can fly (VTOL) to three survey sites on the procedural Martian surface.
 - **Survival needs.** Suit O2 and battery, hydration, nutrition, stamina, fatigue and sleep.
@@ -114,7 +125,8 @@ For more detail, see [Documentation/Gameplay.md](Documentation/Gameplay.md).
 | Toolchain | Visual Studio 2022, MSVC toolset **14.44.35207** (pinned in `*.Target.cs`) |
 | Engine plugins | `ProceduralMeshComponent`, `PythonScriptPlugin`, `EditorScriptingUtilities` |
 | Engine modules | Core, Engine, InputCore, UMG, Slate/SlateCore, AudioMixer, HTTP, Json/JsonUtilities |
-| AI | Anthropic Claude Messages API over HTTP (`claude-opus-5-5`, configurable in `Config/DefaultGame.ini`) |
+| A.R.I.A. | Built-in offline report generator. An optional online mode for developers is described in [ARIA-Integration.md](Documentation/ARIA-Integration.md) |
+| Packaging | `Scripts/Package-Windows.ps1` (Unreal Automation Tool `BuildCookRun`, Shipping, Win64) |
 | Rendering | Custom PS1 post-process and surface materials. Lumen, Virtual Shadow Maps, anti-aliasing and motion blur are disabled |
 | Audio | Procedural real-time synthesis (`UMarsProceduralSynth`). No audio assets |
 | Platform | Windows 64-bit |
@@ -144,6 +156,14 @@ cd MarsSurvival
 If the materials or the map are missing (for example, if you cloned without LFS), regenerate them in the editor with
 **Tools → Execute Python Script →** `Content/Python/setup_mars_project.py`. The script can safely be run again.
 
+
+### Building a playable Windows release
+
+```powershell
+powershell -ExecutionPolicy Bypass -File Scripts\Package-Windows.ps1 -EngineDir "C:\Program Files\Epic Games\UE_5.3"
+```
+
+This compiles, cooks and packages a Shipping build into `Release\ARES-IV\` and zips it as `Release\ARES-IV-Win64.zip`, ready to upload to a GitHub Release. See [Documentation/Releasing.md](Documentation/Releasing.md) for the options and the release checklist.
 
 ### Launcher scripts
 
@@ -211,13 +231,14 @@ The current build plays all three chapters. These items come from what is in the
 - [ ] **Custom intro music.** The game plays `Content/Audio/IntroTheme.wav` if it exists (slowed 0.82× with reverb). Right now it falls back to a procedural theme.
 - [ ] **Imported low-poly models.** Every prop is currently built procedurally by `AMarsPropBuilder`. Imported models can use `M_PS1_Surface` / `MI_HullPanel` to keep the same look.
 - [ ] **Portable launchers.** Replace the hard-coded `D:\` paths in the `.bat` files.
-- [ ] **Packaged builds.** No packaging or shipping configuration has been set up yet.
+- [ ] **First public demo release.** A packaging script now exists (`Scripts/Package-Windows.ps1`). The packaged build still needs a full playtest before it's uploaded to Releases.
 
 ## Project structure
 
 ```
 MarsSurvival/
 ├── MarsSurvival.uproject
+├── INSTALL.md                  Player guide: download, unzip, launch
 ├── Config/                     Engine, game and input settings
 ├── Content/
 │   ├── MarsSurvival/Maps/      AresStation.umap (Git LFS)
@@ -225,7 +246,7 @@ MarsSurvival/
 │   ├── Python/                 setup_mars_project.py (editor bootstrap)
 │   └── UI/                     Splash logo and team poster
 ├── Source/MarsSurvival/
-│   ├── AI/                     A.R.I.A. subsystem + Claude API client
+│   ├── AI/                     A.R.I.A. subsystem, report generation, optional online client
 │   ├── Audio/                  Procedural synth, audio manager, A.R.I.A. voice
 │   ├── Base/                   Habitat modules (pressure, thermal, seals, CO2)
 │   ├── Core/                   Game mode, narrative director, save game, settings, tutorial
@@ -238,8 +259,9 @@ MarsSurvival/
 │   ├── Stations/               Interactive stations and terminals
 │   ├── UI/                     HUD, splash/menu, briefing, pause menu, settings
 │   ├── Vehicles/               RS-2 recon shuttle
-│   └── World/                  Station/terrain/surface generators, environment, beacons
-└── Documentation/
+│   └── World/                  Station/terrain/surface generators, environment, storms, base manager, beacons
+├── Scripts/                    Package-Windows.ps1 / .bat (release packaging)
+└── Documentation/              Design and technical docs, screenshots
 ```
 
 ## Documentation
@@ -248,8 +270,10 @@ MarsSurvival/
 |---|---|
 | [Architecture](Documentation/Architecture.md) | Code layout, main classes and how they connect |
 | [Gameplay](Documentation/Gameplay.md) | Systems in depth: disease, habitat, suit, story, saving |
-| [A.R.I.A. integration](Documentation/ARIA-Integration.md) | Claude API client, configuration, offline mode |
+| [A.R.I.A. integration](Documentation/ARIA-Integration.md) | How A.R.I.A. builds its reports, offline and optional online mode |
 | [Developer tools](Documentation/Developer-Tools.md) | Console commands, launch flags, Python bootstrap |
+| [Releasing](Documentation/Releasing.md) | Packaging a Windows build and publishing a GitHub Release |
+| [INSTALL.md](INSTALL.md) | Player guide for the downloadable demo |
 
 ## Contributing
 
@@ -257,4 +281,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 
-*A PARADOX Production Team game.*
+*ARES-VI is developed by Team Paradox.*
