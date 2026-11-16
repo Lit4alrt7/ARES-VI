@@ -8,7 +8,7 @@ You don't need Unreal Engine or any developer tools to play the demo.
 |---|---|
 | OS | Windows 10 or 11, 64-bit |
 | Graphics | DirectX 11 or 12 capable GPU |
-| Disk space | About 2 GB free |
+| Disk space | About 500 MB free (download ~180 MB, ~280 MB unpacked) |
 | Input | Keyboard and mouse |
 
 ## Install
@@ -61,4 +61,4 @@ Delete the `ARES-IV` folder. To also remove saves and settings, delete `%LOCALAP
 
 ## Reporting a problem
 
-Open an issue on the [Issues](https://github.com/Lit4alrt7/ARES-VI/issues) page. Describe what happened, and attach the log from `%LOCALAPPDATA%\MarsSurvival\Saved\Logs\` if you can.
+Open an issue on the [Issues](https://github.com/Lit4alrt7/ARES-VI/issues) page. Describe what you were doing, what happened, your Windows version and your graphics card. If the game crashed, attach any crash folder from `%LOCALAPPDATA%\MarsSurvival\Saved\Crashes\`.

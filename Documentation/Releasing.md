@@ -28,6 +28,10 @@ Release/
 
 `Release/` is in `.gitignore`. Builds are never committed.
 
+The first Shipping package (November 2026) was about 181 MB zipped and 282 MB unpacked, with 0 C++ errors and 0 compiler warnings. The cook prints a few dozen `LogText` warnings ("Saving FText … initialized from FString") for in-world sign text stored in `AresStation.umap`. They don't affect gameplay. Resaving the map, or building those texts with `FText::AsCultureInvariant`, would silence them.
+
+Shipping builds write no log files. Use `-Configuration Development` when you need logs and the console.
+
 ## 2. Test checklist
 
 Test the **zip**, not your working folder. Extract it somewhere new, ideally on a second PC without Unreal Engine:
@@ -66,7 +70,7 @@ Hard sci-fi psychological survival horror on Mars, 2087. By Team Paradox.
 Full guide: [INSTALL.md](https://github.com/Lit4alrt7/ARES-VI/blob/main/INSTALL.md)
 
 ### Requirements
-Windows 10/11 64-bit, DirectX 11/12 GPU, ~2 GB disk.
+Windows 10/11 64-bit, DirectX 11/12 GPU, ~500 MB disk.
 
 ### Known issues
 - The build is not code-signed. Windows SmartScreen will ask you to confirm.
